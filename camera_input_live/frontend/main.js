@@ -105,7 +105,7 @@ function onRender(event) {
 
     takepicture();
     setInterval(takepicture, debounce);
-    window.rendered = true
+    window.rendered = false
   }
 }
 
