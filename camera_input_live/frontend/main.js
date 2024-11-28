@@ -18,15 +18,21 @@ function onRender(event) {
   // Only run the render code the first time the component is loaded.
   if (!window.rendered) {
     // You most likely want to get the data passed in like this
-    const {height, width, debounce, showControls, startLabel, stopLabel} = event.detail.args
+    //const {height, width, debounce, showControls, startLabel, stopLabel} = event.detail.args
+    var {height, width, debounce, showControls, startLabel, stopLabel} = event.detail.args;
 
     if (showControls) {
       Streamlit.setFrameHeight(45)
     }
 
-    if (isNaN(height)) {
-      height = width / (4/3);
-    }
+    var device = "destop";
+    const ua = navigator.userAgent;
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {device = "tablet";}
+    if (/Mobile|iP(hone|od)|Android|BlackBerry|IEMobile|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/.test(ua)) {device="mobile";}
+
+    if (device == "desktop"){height = 3*width / 4;}
+    if (device == "mobile" || device == "tablet"){height = 16*width / 9;}
+    
 
     let video = document.getElementById('video');
     let canvas = document.getElementById('canvas');
@@ -60,7 +66,7 @@ function onRender(event) {
     }
 
     function startVideo() {
-      navigator.mediaDevices.getUserMedia({ video: true })
+      navigator.mediaDevices.getUserMedia({video: {width: 1280, height:  720, facingMode:'environment'}})
         .then(function(stream) {
           video.srcObject = stream;
           video.play();
@@ -84,7 +90,7 @@ function onRender(event) {
 
     if (navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices
-        .getUserMedia({ video: true })
+        .getUserMedia({ video: {width: 1280, height: 720, facingMode:'environment' }})
         .then(function (stream) {
           video.srcObject = stream;
         })
@@ -97,7 +103,7 @@ function onRender(event) {
     button.addEventListener('click', toggleVideo);
     button.textContent = stopped ? startLabel : stopLabel;
 
-    //takepicture();
+    takepicture();
     setInterval(takepicture, debounce);
     window.rendered = true
   }
