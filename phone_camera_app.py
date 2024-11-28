@@ -1,7 +1,8 @@
 import streamlit as st
+from streamlit_back_camera_input import back_camera_input
 
 st.write("Camera test app")
-pic = st.camera_input("Camera")
+pic = back_camera_input()
 
 if pic:
     st.image(pic)
