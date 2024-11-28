@@ -1,1 +1,2 @@
 streamlit-back-camera-input
+streamlit-camera-input-live
