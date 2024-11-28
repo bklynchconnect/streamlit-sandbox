@@ -97,7 +97,7 @@ function onRender(event) {
     button.addEventListener('click', toggleVideo);
     button.textContent = stopped ? startLabel : stopLabel;
 
-    takepicture();
+    //takepicture();
     setInterval(takepicture, debounce);
     window.rendered = true
   }
